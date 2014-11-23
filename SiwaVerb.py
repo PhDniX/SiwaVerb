@@ -10,9 +10,9 @@
 # 9 = ɣ
 # 0 = č, ) = Č
 
-V = ['a','i','u']
-C = ['q','w','r','t','y','s','d','f','g','h','j','k','l','z','x','c','b','n','m','0','5','6','2','1','-','8','7','9','4','3']
-K = ['Q','W','R','T','Y','S','D','F','G','H','J','K','L','Z','X','C','B','N','M',')','%','^','@','!','_','*','&','(','$','#']
+V = [u'a',u'i',u'u']
+C = [u'q',u'w',u'r',u't',u'y',u's',u'd',u'f',u'g',u'h',u'j',u'k',u'l',u'z',u'x',u'š',u'b',u'n',u'm',u'0',u'5',u'6',u'2',u'1',u'-',u'8',u'7',u'9',u'4',u'3']
+K = [u'Q',u'W',u'R',u'T',u'Y',u'S',u'D',u'F',u'G',u'H',u'J',u'K',u'L',u'Z',u'X',u'Š',u'B',u'N',u'M',u')',u'%',u'^',u'@',u'!',u'_',u'*',u'&',u'(',u'$',u'#']
 
 def CountWeight(x):
 	weight = 0
@@ -32,14 +32,14 @@ def CountWeight(x):
 	return weight
 
 def IsBhD(x):
-	BhD = ['fl', 'rf']
+	BhD = [u'fl', u'rf']
 	if x in BhD:
 		return True
 	else:
 		return False
 		
 def IsOnom(x):
-	Onom = ['0r04']
+	Onom = [u'0r04']
 	if x in Onom:
 		return True
 	else:
@@ -50,7 +50,7 @@ def IsValidOnset(x):
 		return False
 	if x[0] in K:
 		return False
-	if x[0] == 'e':
+	if x[0] == u'e':
 		return False
 	else:
 		return True
@@ -68,7 +68,7 @@ def IsFinalLong(x):
 		return False
 
 def IsFinalM(x):
-	if x[len(x)-1] == '-':
+	if x[len(x)-1] == u'-':
 		return True
 	else:
 		return False
@@ -93,42 +93,42 @@ def GeminateC2(x): #Geminates the second consonant of a stem
 	return x[:1] + Geminate(x[1]) + x[2:]
 
 def PrefixT(x): #Prefixes t- before a stem
-	if x[0] == 's' or x[0] == '0':
+	if x[0] == u's' or x[0] == u'0':
 		return x
 	else:
-		return 't' + x
+		return u't' + x
 
 def InfixA(x): #Places a long vowel (in this case a, but melodies mutate it) before the last stem consonant.
 	if x[len(x)-1] in C:
-		return x[:len(x)-1] + 'a' + x[len(x)-1:]
+		return x[:len(x)-1] + u'a' + x[len(x)-1:]
 	else:
 		return x
 
 #Apply vowel melodies
 def MelodyA(x):
 	for vowel in V:
-		x = x.replace(vowel, 'a')
+		x = x.replace(vowel, u'a')
 	return x
 
 def MelodyI(x):
 	for vowel in V:
-		x = x.replace(vowel, 'i')
+		x = x.replace(vowel, u'i')
 	return x
 
 def MelodyU(x):
 	for vowel in V:
-		x = x.replace(vowel, 'u')
+		x = x.replace(vowel, u'u')
 	return x
 
 #Add final vowels
 def AddU(x):
-	return x + 'u'
+	return x + u'u'
 
 def AddA(x):
-	return x + 'a'
+	return x + u'a'
 
 def AddAI(x): #Adds the variable vowel A/I to the stem, the PNG suffixes functions replace it with either a or i.
-	return x + 'A'
+	return x + u'A'
 
 #Stem formation
 def Pf(stem):
@@ -173,77 +173,77 @@ def InsertShwa(x):
 	while (count <= len(y)):
 		if y[len(y)-count-1] in K:
 			if y[len(y)-count-2] in C or y[len(y)-count-2] in K: 
-				y.insert(len(y)-count-1, 'e')
+				y.insert(len(y)-count-1, u'e')
 				count += 1
 			else:
 				count += 1
 		if y[len(y)-count-1] in C:
 			if y[len(y)-count-2] in C or y[len(y)-count-2] in K: 
-				if y[len(y)-count] == 'e' or y[len(y)-count] in V:
+				if y[len(y)-count] == u'e' or y[len(y)-count] in V:
 					count += 1
-					if y[len(y)-count-3] == 'e' or y[len(y)-count-3] in V:
+					if y[len(y)-count-3] == u'e' or y[len(y)-count-3] in V:
 						count += 1
 				else:
-					y.insert(len(y)-count-1, 'e')
+					y.insert(len(y)-count-1, u'e')
 					count += 1
 			else:
 				count += 1
 		else:
 			count += 1
-	if y[0] == 'y' and y[1] in C:
-		y[0] = 'i'
+	if y[0] == u'y' and y[1] in C:
+		y[0] = u'i'
 	y.pop()
 	return  ''.join(y)
 
 #PNG-Marking
 def Conj1s(x):
-	if x[len(x)-1] == 'A':
-		x = x[:len(x)-1] + 'i'
-	return x + '9'
+	if x[len(x)-1] == u'A':
+		x = x[:len(x)-1] + u'i'
+	return x + u'9'
 
 def Conj2s(x):
-	if x[len(x)-1] == 'A':
-		x = x[:len(x)-1] + 'i'
-	return x + '4'
+	if x[len(x)-1] == u'A':
+		x = x[:len(x)-1] + u'i'
+	return x + u'4'
 
 def Conj3sm(x):
-	if x[len(x)-1] == 'A':
-		x = x[:len(x)-1] + 'a'
-	return 'y' + x
+	if x[len(x)-1] == u'A':
+		x = x[:len(x)-1] + u'a'
+	return u'y' + x
 
 def Conj3sf(x):
-	if x[len(x)-1] == 'A':
-		x = x[:len(x)-1] + 'a'
-	return 't' + x
+	if x[len(x)-1] == u'A':
+		x = x[:len(x)-1] + u'a'
+	return u't' + x
 
 def Conj1p(x):
-	if x[len(x)-1] == 'A':
-		x = x[:len(x)-1] + 'a'
-	return 'n' + x
+	if x[len(x)-1] == u'A':
+		x = x[:len(x)-1] + u'a'
+	return u'n' + x
 
 def Conj2p(x):
-	if x[len(x)-1] == 'A':
-		x = x[:len(x)-1] + 'a'
-	return x + 'm'
+	if x[len(x)-1] == u'A':
+		x = x[:len(x)-1] + u'a'
+	return x + u'm'
 
 def Conj3p(x):
-	if x[len(x)-1] == 'A':
-		x = x[:len(x)-1] + 'a'
-	return 'y' + x + 'n'
+	if x[len(x)-1] == u'A':
+		x = x[:len(x)-1] + u'a'
+	return u'y' + x + u'n'
 
 #Complete conjugation (excluding imperatives, and without the IRR ga- prefix).
 def Conj(x):
-	print '1S   |' + InsertShwa(Conj1s(x)) + '   | ' + InsertShwa(Conj1s(Pf(x))) + '  | ' + InsertShwa(Conj1s(Impf(x)))
-	print '2S   |' + InsertShwa(Conj2s(x)) + '   | ' + InsertShwa(Conj2s(Pf(x))) + '  | ' + InsertShwa(Conj2s(Impf(x)))
-	print '3S:M |' + InsertShwa(Conj3sm(x)) + '   | ' + InsertShwa(Conj3sm(Pf(x))) + '  | ' + InsertShwa(Conj3sm(Impf(x)))
-	print '3S:F |' + InsertShwa(Conj3sf(x)) + '   | ' + InsertShwa(Conj3sf(Pf(x))) + '  | ' + InsertShwa(Conj3sf(Impf(x)))
-	print '1P   |' + InsertShwa(Conj1p(x)) + '   | ' + InsertShwa(Conj1p(Pf(x))) + '  | ' + InsertShwa(Conj1p(Impf(x)))
-	print '2P   |' + InsertShwa(Conj2p(x)) + '   | ' + InsertShwa(Conj2p(Pf(x))) + '  | ' + InsertShwa(Conj2p(Impf(x)))
-	print '3P   |' + InsertShwa(Conj3p(x)) + ' | ' + InsertShwa(Conj3p(Pf(x))) + ' | ' + InsertShwa(Conj3p(Impf(x)))
-	print '-----------------------------------'
+	print u'1S   |' + InsertShwa(Conj1s(x)) + u'   | ' + InsertShwa(Conj1s(Pf(x))) + u'  | ' + InsertShwa(Conj1s(Impf(x)))
+	print u'2S   |' + InsertShwa(Conj2s(x)) + u'   | ' + InsertShwa(Conj2s(Pf(x))) + u'  | ' + InsertShwa(Conj2s(Impf(x)))
+	print u'3S:M |' + InsertShwa(Conj3sm(x)) + u'   | ' + InsertShwa(Conj3sm(Pf(x))) + u'  | ' + InsertShwa(Conj3sm(Impf(x)))
+	print u'3S:F |' + InsertShwa(Conj3sf(x)) + u'   | ' + InsertShwa(Conj3sf(Pf(x))) + u'  | ' + InsertShwa(Conj3sf(Impf(x)))
+	print u'1P   |' + InsertShwa(Conj1p(x)) + u'   | ' + InsertShwa(Conj1p(Pf(x))) + u'  | ' + InsertShwa(Conj1p(Impf(x)))
+	print u'2P   |' + InsertShwa(Conj2p(x)) + u'   | ' + InsertShwa(Conj2p(Pf(x))) + u'  | ' + InsertShwa(Conj2p(Impf(x)))
+	print u'3P   |' + InsertShwa(Conj3p(x)) + u' | ' + InsertShwa(Conj3p(Pf(x))) + u' | ' + InsertShwa(Conj3p(Impf(x)))
+	print u'-----------------------------------'
 
 #Testcases
-print Conj('fl')
+'''print Conj('fl')
 print Conj('Ks')
 print Conj('sl')
 print Conj('lmd')
@@ -260,4 +260,5 @@ print Conj('0r04')
 print Conj('ndd-')
 print Conj('en7rq')
 print Conj('bdd')
-print Conj('kMl') 
+print Conj('kMl')'''
+print Conj(u'krš') 
